@@ -49,6 +49,9 @@ function	getProvider(chain = 1) {
 	} else if (chain === 56) {
 		return new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org/');
 	}
+	else if (chain === 42161) {
+		return new ethers.providers.JsonRpcProvider('https://arb1.arbitrum.io/rpc');
+	}
 	return (new ethers.providers.AlchemyProvider('homestead'));
 }
 
@@ -57,6 +60,7 @@ const	ENUM_CHAIN = {
 	'BSC (56)': 56,
 	'Polygon (137)': 137,
 	'Fantom Opera (250)': 250,
+	'Arbitrum (42161)':42161
 };
 const	ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 const	toAddress = (address) => {
@@ -107,12 +111,12 @@ if (!args.logo) {
 **	The chain will be associated with the `CHAINID` key. Numbers are expected.
 **	Possible value : 1, 56, 137, 250
 ******************************************************************************/
-if (!args.chain || !([1, 56, 137, 250]).includes(args.chain)) {
+if (!args.chain || !([1, 56, 137, 250, 42161]).includes(args.chain)) {
 	questions.push(		{
 		type: 'list',
 		name: 'vaultChain',
 		message: 'Which chain ?',
-		choices: ['Mainnet (1)', 'BSC (56)', 'Polygon (137)', 'Fantom Opera (250)'],
+		choices: ['Mainnet (1)', 'BSC (56)', 'Polygon (137)', 'Fantom Opera (250)','Arbitrum (42161)'],
 	},);
 } else {
 	if (args.chain === 1)
@@ -123,6 +127,8 @@ if (!args.chain || !([1, 56, 137, 250]).includes(args.chain)) {
 		defaultVaultChain = 'Polygon (137)';
 	if (args.chain === 250)
 		defaultVaultChain = 'Fantom Opera (250)';
+	if (args.chain === 42161)
+		defaultVaultChain = 'Arbitrum (42161)';
 }
 
 /******************************************************************************
@@ -181,9 +187,9 @@ inquirer.prompt(questions).then(async ({
 		throw 'Cannot be address 0';
 	}
 	const	provider = getProvider(ENUM_CHAIN[vaultChain]);
-	const	contract = new ethers.Contract(address, ['function token() view returns (address)'], provider);
+	const	contract = new ethers.Contract(address, ['function token() external view returns (address)'], provider);
 	const	tokenAddress = await contract.token();
-	const	erc20Contract = new ethers.Contract(tokenAddress, ['function symbol() view returns (string)'], provider);
+	const	erc20Contract = new ethers.Contract(tokenAddress, ['function symbol() external view returns (string)'], provider);
 	const	tokenSymbol = await erc20Contract.symbol();
 	let		tokenInfo = {};
 	if (args.coingecko) {

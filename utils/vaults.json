@@ -849,7 +849,7 @@
     "WANT_ADDR": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
     "WANT_SYMBOL": "DAI",
     "COINGECKO_SYMBOL": "dai",
-    "VAULT_STATUS": "new",
+    "VAULT_STATUS": "active",
     "CHAIN_ID": 1
   },
   "fantom-dai": {
@@ -861,7 +861,18 @@
     "WANT_ADDR": "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     "WANT_SYMBOL": "DAI",
     "COINGECKO_SYMBOL": "dai",
-    "VAULT_STATUS": "new",
+    "VAULT_STATUS": "active",
     "CHAIN_ID": 250
+  },
+  "weth-nyan": {
+    "TITLE": "WETH Nyan",
+    "LOGO": "WETH",
+    "VAULT_ABI": "yVaultV2",
+    "VAULT_TYPE": "experimental",
+    "VAULT_ADDR": "0x7d2f96152b8A8ED1278379412F8107276489C0A1",
+    "WANT_ADDR": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "WANT_SYMBOL": "WETH",
+    "VAULT_STATUS": "new",
+    "CHAIN_ID": 42161
   }
 }
